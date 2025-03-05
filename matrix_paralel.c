@@ -3,12 +3,13 @@
 #include <pthread.h>
 #include <time.h>
 
-#define MAX_THREADS 2  // Ajusta según el hardware
+#define MAX_THREADS 8
+
+int *matrixA, *matrixB, *matrixC;
 
 typedef struct {
     int startRow, endRow;
     int n;
-    int *matrixA, *matrixB, *matrixC;
 } ThreadData;
 
 void* matrixMultiplicationThread(void* arg) {
@@ -18,7 +19,7 @@ void* matrixMultiplicationThread(void* arg) {
     for (int i = data->startRow; i < data->endRow; i++) {
         for (int j = 0; j < n; j++) {
             for (int k = 0; k < n; k++) {
-                data->matrixC[i * n + j] += data->matrixA[i * n + k] * data->matrixB[k * n + j];
+                matrixC[i * n + j] += matrixA[i * n + k] * matrixB[k * n + j];
             }
         }
     }
@@ -43,69 +44,57 @@ void fillMatrix(int* matrix, int n) {
 }
 
 int main(int argc, char* argv[]) {
+    if (argc != 3) {
+        printf("Usage: %s <matrix_size> <verbose (0 or 1)>\n", argv[0]);
+        return 1;
+    }
 
-  // Check if the number of arguments is correct
-  if (argc != 3) {
-    printf("Usage: %s <matrix_size> <verbose (0 or 1)>\n", argv[0]);
-    return 1;
-  }
+    int n = atoi(argv[1]);
+    int verbose = atoi(argv[2]);
 
-  // Get the arguments to matrix size and verbose
-  int n = atoi(argv[1]);
-  int verbose = atoi(argv[2]);
+    if (n <= 0 || (verbose != 0 && verbose != 1)) {
+        printf("Error: Invalid arguments. Matrix size must be > 0 and verbose must be 0 or 1.\n");
+        return 1;
+    }
 
-  // Check if the arguments are valid
-  if (n <= 0 || (verbose != 0 && verbose != 1)) {
-    printf("Error: Invalid arguments. Matrix size must be > 0 and verbose must be 0 or 1.\n");
-    return 1;
-  }
+    srand(time(NULL));
 
+    matrixA = (int*)malloc(n * n * sizeof(int));
+    matrixB = (int*)malloc(n * n * sizeof(int));
+    matrixC = (int*)calloc(n * n, sizeof(int));
 
-  // Initialize random number generator
-  srand(time(NULL));
+    fillMatrix(matrixA, n);
+    fillMatrix(matrixB, n);
 
-  // Allocate memory for matrices
-  int *matrixA = (int*)malloc(n * n * sizeof(int));
-  int *matrixB = (int*)malloc(n * n * sizeof(int));
-  int *matrixC = (int*)calloc(n * n, sizeof(int));  // Initialize in 0
+    pthread_t threads[MAX_THREADS];
+    ThreadData threadData[MAX_THREADS];
+    int rowsPerThread = n / MAX_THREADS;
 
-  // Fill matrix A and B with random numbers
-  fillMatrix(matrixA, n);
-  fillMatrix(matrixB, n);
+    clock_t start = clock();
 
-  // Declare threads and thread data
-  pthread_t threads[MAX_THREADS];
-  ThreadData threadData[MAX_THREADS];
+    for (int i = 0; i < MAX_THREADS; i++) {
+        threadData[i].startRow = i * rowsPerThread;
+        threadData[i].endRow = (i == MAX_THREADS - 1) ? n : (i + 1) * rowsPerThread;
+        threadData[i].n = n;
 
-  int rowsPerThread = n / MAX_THREADS;
-  clock_t start = clock();
+        pthread_create(&threads[i], NULL, matrixMultiplicationThread, &threadData[i]);
+    }
 
-  for (int i = 0; i < MAX_THREADS; i++) {
-    threadData[i].startRow = i * rowsPerThread;
-    threadData[i].endRow = (i == MAX_THREADS - 1) ? n : (i + 1) * rowsPerThread;
-    threadData[i].n = n;
-    threadData[i].matrixA = matrixA;
-    threadData[i].matrixB = matrixB;
-    threadData[i].matrixC = matrixC;
+    for (int i = 0; i < MAX_THREADS; i++) {
+        pthread_join(threads[i], NULL);
+    }
 
-    pthread_create(&threads[i], NULL, matrixMultiplicationThread, &threadData[i]);
-  }
+    clock_t end = clock();
+    printf("Time taken for matrix multiplication: %f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-  for (int i = 0; i < MAX_THREADS; i++) {
-    pthread_join(threads[i], NULL);
-  }
+    if (verbose) {
+        printf("Matrix Result:\n");
+        printMatrix(matrixC, n);
+    }
 
-  clock_t end = clock();
-  printf("Time taken for matrix multiplication: %f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
+    free(matrixA);
+    free(matrixB);
+    free(matrixC);
 
-  if (verbose) {
-    printf("Matrix Result:\n");
-    printMatrix(matrixC, n);
-  }
-
-  free(matrixA);
-  free(matrixB);
-  free(matrixC);
-
-  return 0;
+    return 0;
 }
