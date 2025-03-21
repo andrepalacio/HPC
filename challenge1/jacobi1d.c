@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "timing.h"
+#include "timing.c"
 
 /* --
  * Do nsweeps sweeps of Jacobi iteration on a 1D Poisson problem
