@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 
 # Nombre del ejecutable compilado
-EXECUTABLE = "./secuencial" 
-RESULT_FILE = "benchmark_results.csv"
-TEST_DIR = "tests_matrix_secuencial"
+EXECUTABLE = "./hilos" 
+RESULT_FILE = "benchmark_hilos_results.csv"
+TEST_DIR = "tests_matrix_hilos"
 
 
 # Crear directorios si no existen
@@ -102,5 +102,5 @@ def plot_results():
     print("Plots generated and saved.")
 
 if __name__ == "__main__":
-    run_tests()
+    # run_tests()
     plot_results()

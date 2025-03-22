@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <time.h>
 
-#define MAX_THREADS 8
+#define MAX_THREADS 16
 
 int *matrixA, *matrixB, *matrixC;
 
@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
     }
 
     clock_t end = clock();
-    printf("Time taken for matrix multiplication: %f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
+    printf("Time taken for matrix multiplication: %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
     if (verbose) {
         printf("Matrix Result:\n");
