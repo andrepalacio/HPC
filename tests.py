@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 
 # Nombre del ejecutable compilado
-EXECUTABLE = "./hilos" 
-RESULT_FILE = "benchmark_hilos_results.csv"
-TEST_DIR = "tests_matrix_hilos"
+EXECUTABLE = "./matrix_mutliplication/secuencial/matrix_secuencial_transponse" 
+RESULT_FILE = "./matrix_mutliplication/secuencial/tests_matrix_secuencial_transponse.csv"
+TEST_DIR = "./secuencial/tests_matrix_secuencial_transponse"
 
 
 # Crear directorios si no existen
@@ -18,7 +18,7 @@ os.makedirs(f"{TEST_DIR}/linear", exist_ok=True)
 os.makedirs(f"{TEST_DIR}/avg", exist_ok=True)
 
 # Rango de tamaños de la matriz (exponencial desde 100)
-test_sizes = [int(100 * (2 ** i)) for i in range(7)] 
+test_sizes = [int(100 * (2 ** i)) for i in range(6)] 
 num_repetitions = 10
 
 def run_tests():
@@ -102,5 +102,5 @@ def plot_results():
     print("Plots generated and saved.")
 
 if __name__ == "__main__":
-    # run_tests()
+    run_tests()
     plot_results()

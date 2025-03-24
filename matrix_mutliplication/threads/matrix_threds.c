@@ -3,9 +3,9 @@
 #include <pthread.h>
 #include <time.h>
 
-#define MAX_THREADS 16
 
 int *matrixA, *matrixB, *matrixC;
+int numThreads;
 
 typedef struct {
     int startRow, endRow;
@@ -44,13 +44,14 @@ void fillMatrix(int* matrix, int n) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
+    if (argc != 4) {
         printf("Usage: %s <matrix_size> <verbose (0 or 1)>\n", argv[0]);
         return 1;
     }
 
     int n = atoi(argv[1]);
-    int verbose = atoi(argv[2]);
+    int numThreads = atoi(argv[2]);;
+    int verbose = atoi(argv[3]);
 
     if (n <= 0 || (verbose != 0 && verbose != 1)) {
         printf("Error: Invalid arguments. Matrix size must be > 0 and verbose must be 0 or 1.\n");
@@ -66,21 +67,22 @@ int main(int argc, char* argv[]) {
     fillMatrix(matrixA, n);
     fillMatrix(matrixB, n);
 
-    pthread_t threads[MAX_THREADS];
-    ThreadData threadData[MAX_THREADS];
-    int rowsPerThread = n / MAX_THREADS;
+
+    pthread_t threads[numThreads];
+    ThreadData threadData[numThreads];
+    int rowsPerThread = n / numThreads;
 
     clock_t start = clock();
 
-    for (int i = 0; i < MAX_THREADS; i++) {
+    for (int i = 0; i < numThreads; i++) {
         threadData[i].startRow = i * rowsPerThread;
-        threadData[i].endRow = (i == MAX_THREADS - 1) ? n : (i + 1) * rowsPerThread;
+        threadData[i].endRow = (i == numThreads - 1) ? n : (i + 1) * rowsPerThread;
         threadData[i].n = n;
 
         pthread_create(&threads[i], NULL, matrixMultiplicationThread, &threadData[i]);
     }
 
-    for (int i = 0; i < MAX_THREADS; i++) {
+    for (int i = 0; i < numThreads; i++) {
         pthread_join(threads[i], NULL);
     }
 
