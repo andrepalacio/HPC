@@ -2,15 +2,13 @@ import subprocess
 import time
 import csv
 import os
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Nombre del ejecutable compilado
-EXECUTABLE = "./matrix_mutliplication/secuencial/matrix_secuencial" 
-RESULT_FILE = "./matrix_mutliplication/secuencial/tests_matrix_secuencial.csv"
-TEST_DIR = "./secuencial/tests_matrix_secuencial"
-
+EXECUTABLE = "./matrix_mutliplication/threads/matrix_threads" 
+RESULT_FILE = "./matrix_mutliplication/threads/tests_matrix_threads.csv"
+TEST_DIR = "./threadsncial/tests_matrix_threads"
 
 # Crear directorios si no existen
 os.makedirs(f"{TEST_DIR}/logarithmic", exist_ok=True)
@@ -18,33 +16,36 @@ os.makedirs(f"{TEST_DIR}/linear", exist_ok=True)
 os.makedirs(f"{TEST_DIR}/avg", exist_ok=True)
 
 # Rango de tamaños de la matriz (exponencial desde 100)
-test_sizes = [int(100 * (2 ** i)) for i in range(7)] 
+test_sizes = [int(100 * (2 ** i)) for i in range(6)] 
 num_repetitions = 10
+num_threads = [2, 4, 8, 16, 32]
 
 def run_tests():
     # Crear archivo CSV y escribir encabezado si no existe
+    print("Running tests...")
     file_exists = os.path.isfile(RESULT_FILE)
     with open(RESULT_FILE, mode="w", newline="") as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(["Iteration", "Matrix Size", "Execution Time (s)"])
+            writer.writerow(["Iteration", "Matrix Size", "Num Threads", "Execution Time (s)"])
         
-        for iteration in range(num_repetitions):
-            for size in test_sizes:
-                result = subprocess.run([EXECUTABLE, str(size), "0"], capture_output=True, text=True)
-                
-                # Extraer el tiempo de ejecución del programa C
-                exec_time = None
-                for line in result.stdout.split("\n"):
-                    if "Time taken for matrix multiplication" in line:
-                        exec_time = float(line.split(":")[1].strip())
-                        break
-                
-                if exec_time is not None:
-                    print(f"Iteration {iteration + 1}, Size {size}: {exec_time} sec")
-                    writer.writerow([iteration + 1, size, exec_time])
+        for threads in num_threads:
+            for iteration in range(num_repetitions):
+                for size in test_sizes:
+                    result = subprocess.run([EXECUTABLE, str(size), str(threads), "0"], capture_output=True, text=True)
+                    
+                    # Extraer el tiempo de ejecución del programa C
+                    exec_time = None
+                    for line in result.stdout.split("\n"):
+                        if "Time taken for matrix multiplication" in line:
+                            exec_time = float(line.split(":")[1].strip())
+                            break
+                    
+                    if exec_time is not None:
+                        print(f"Iteration {iteration + 1}, Size {size}, Threads {threads}: {exec_time} sec")
+                        writer.writerow([iteration + 1, size, threads, exec_time])
     print("Tests completed. Results saved to CSV.")
-
+    
 def plot_results():
     df = pd.read_csv(RESULT_FILE)
     

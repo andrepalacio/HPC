@@ -3,8 +3,7 @@
 #include <pthread.h>
 #include <time.h>
 
-
-int *matrixA, *matrixB, *matrixC;
+int *matrixA, *matrixB, *matrixC, *matrixBT;
 int numThreads;
 
 typedef struct {
@@ -12,20 +11,33 @@ typedef struct {
     int n;
 } ThreadData;
 
+// Transpone la matriz B y la almacena en matrixBT
+void transposeMatrix(int* matrix, int* transposed, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            transposed[j * n + i] = matrix[i * n + j];
+        }
+    }
+}
+
+// Multiplicación de matrices usando threads
 void* matrixMultiplicationThread(void* arg) {
     ThreadData* data = (ThreadData*)arg;
     int n = data->n;
 
     for (int i = data->startRow; i < data->endRow; i++) {
         for (int j = 0; j < n; j++) {
+            int sum = 0;
             for (int k = 0; k < n; k++) {
-                matrixC[i * n + j] += matrixA[i * n + k] * matrixB[k * n + j];
+                sum += matrixA[i * n + k] * matrixBT[j * n + k];  // Ahora accedemos secuencialmente
             }
+            matrixC[i * n + j] = sum;
         }
     }
     return NULL;
 }
 
+// Función para imprimir matrices
 void printMatrix(int* matrix, int n) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -35,6 +47,7 @@ void printMatrix(int* matrix, int n) {
     }
 }
 
+// Llena una matriz con valores aleatorios
 void fillMatrix(int* matrix, int n) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -45,28 +58,32 @@ void fillMatrix(int* matrix, int n) {
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        printf("Usage: %s <matrix_size> <verbose (0 or 1)>\n", argv[0]);
+        printf("Usage: %s <matrix_size> <num_threads> <verbose (0 or 1)>\n", argv[0]);
         return 1;
     }
 
     int n = atoi(argv[1]);
-    int numThreads = atoi(argv[2]);;
+    int numThreads = atoi(argv[2]);
     int verbose = atoi(argv[3]);
 
-    if (n <= 0 || (verbose != 0 && verbose != 1)) {
-        printf("Error: Invalid arguments. Matrix size must be > 0 and verbose must be 0 or 1.\n");
+    if (n <= 0 || numThreads <= 0 || (verbose != 0 && verbose != 1)) {
+        printf("Error: Invalid arguments. Matrix size and num_threads must be > 0, and verbose must be 0 or 1.\n");
         return 1;
     }
 
     srand(time(NULL));
 
+    // Asignación de memoria
     matrixA = (int*)malloc(n * n * sizeof(int));
     matrixB = (int*)malloc(n * n * sizeof(int));
+    matrixBT = (int*)malloc(n * n * sizeof(int));  // Matriz transpuesta de B
     matrixC = (int*)calloc(n * n, sizeof(int));
 
     fillMatrix(matrixA, n);
     fillMatrix(matrixB, n);
 
+
+    transposeMatrix(matrixB, matrixBT, n);
 
     pthread_t threads[numThreads];
     ThreadData threadData[numThreads];
@@ -90,12 +107,18 @@ int main(int argc, char* argv[]) {
     printf("Time taken for matrix multiplication: %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
     if (verbose) {
-        printf("Matrix Result:\n");
+        printf("Matrix A:\n");
+        printMatrix(matrixA, n);
+        printf("Matrix B:\n");
+        printMatrix(matrixB, n);
+        printf("Matrix C (Result):\n");
         printMatrix(matrixC, n);
     }
 
+    // Liberar memoria
     free(matrixA);
     free(matrixB);
+    free(matrixBT);
     free(matrixC);
 
     return 0;
