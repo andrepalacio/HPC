@@ -1,8 +1,8 @@
 #!/bin/bash
 
-EXECUTABLE="./matrix_mutliplication/threads/matrix_threads"
-RESULT_FILE="./matrix_mutliplication/threads/tests_matrix_threads2.csv"
-TEST_DIR="./threadsncial/tests_matrix_threads2"
+EXECUTABLE="./matrix_mutliplication/threads/threads_test"
+RESULT_FILE="./matrix_mutliplication/threads/tests_matrix_threads3.csv"
+TEST_DIR="./threadsncial/tests_matrix_threads3"
 
 # Crear directorios si no existen
 mkdir -p "$TEST_DIR/logarithmic" "$TEST_DIR/linear" "$TEST_DIR/avg"

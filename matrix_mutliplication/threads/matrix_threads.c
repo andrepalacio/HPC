@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <time.h>
-
+#include <sys/time.h>  
 int *matrixA, *matrixB, *matrixC, *matrixBT;
 int numThreads;
 
@@ -56,6 +56,12 @@ void fillMatrix(int* matrix, int n) {
     }
 }
 
+double getCurrentTime() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv.tv_sec + tv.tv_usec / 1000000.0;
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 4) {
         printf("Usage: %s <matrix_size> <num_threads> <verbose (0 or 1)>\n", argv[0]);
@@ -89,7 +95,7 @@ int main(int argc, char* argv[]) {
     ThreadData threadData[numThreads];
     int rowsPerThread = n / numThreads;
 
-    clock_t start = clock();
+    double startTime = getCurrentTime();
 
     for (int i = 0; i < numThreads; i++) {
         threadData[i].startRow = i * rowsPerThread;
@@ -103,8 +109,8 @@ int main(int argc, char* argv[]) {
         pthread_join(threads[i], NULL);
     }
 
-    clock_t end = clock();
-    printf("Time taken for matrix multiplication: %f\n", (double)(end - start) / CLOCKS_PER_SEC);
+    double endTime = getCurrentTime();
+    printf("Time taken for matrix multiplication: %f\n", (double)(endTime - startTime));
 
     if (verbose) {
         printf("Matrix A:\n");

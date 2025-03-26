@@ -43,6 +43,8 @@ void printMatrix(int* matrix, int n) {
     }
 }
 
+
+
 int main(int argc, char* argv[]) {
     if (argc != 4) {
         printf("Usage: %s <matrix_size> <num_processes> <verbose (0 or 1)>\n", argv[0]);
