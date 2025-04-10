@@ -16,13 +16,11 @@ typedef clock_t timing_t;
 #else
 
 typedef struct timespec timing_t;
+long double timespec_to_dbl (struct timespec x);
+long double timespec_diff (struct timespec start, struct timespec finish);
 
-// Function declarations based on timing.c
-long double timespec_to_dbl(struct timespec x);
-long double timespec_diff(struct timespec start, struct timespec finish);
-long double timer_resolution(void);
-void get_time(struct timespec *tref);
-
+long double timer_resolution (void);
+void get_time (struct timespec*);
 #endif
 
 #if defined(__cplusplus)

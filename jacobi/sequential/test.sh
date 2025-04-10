@@ -8,7 +8,7 @@ TEST_DIR="./tests_jacobi1d"
 mkdir -p "$TEST_DIR/logarithmic" "$TEST_DIR/linear" "$TEST_DIR/avg"
 
 # Rango de tamaños de la matriz (exponencial desde 100)
-test_sizes=(10000 100000 400000 1000000 6000000 10000000)
+test_sizes=(10000 100000 400000 1000000 6000000 10 00000)
 num_repetitions=10
 num_steps=(200 1000 5000 10000)
 

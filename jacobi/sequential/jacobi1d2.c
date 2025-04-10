@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../timing.h"
+
+#include "timing.h"
 
 /* --
  * Do nsweeps sweeps of Jacobi iteration on a 1D Poisson problem
@@ -80,7 +81,7 @@ int main(int argc, char** argv)
     /* Run the solver */    
     printf("n: %d\n"
            "nsteps: %d\n"
-           "Elapsed time: %g s\n", 
+           "Elapsed time: %Lg s\n", 
            n, nsteps, timespec_diff(tstart, tend));
 
     /* Write the results */
