@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include "../timing.c"
+#include "timing.h"
 
 int NUM_THREADS = 4;
 
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
     printf("n: %d\n"
            "nsteps: %d\n"
            "num_threads: %d\n"
-           "Elapsed time: %g s\n", 
+           "Elapsed time: %Lg s\n", 
            n, nsteps, NUM_THREADS, timespec_diff(tstart, tend));
 
     if (fname)
