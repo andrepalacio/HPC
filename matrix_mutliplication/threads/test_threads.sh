@@ -1,7 +1,7 @@
 #!/bin/bash
 
-EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/openmp/matrix_openmp"
-RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/openmp/tests_matrix_openmp.csv"
+EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/threads/matrix_threads"
+RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/threads/tests_matrix_threads_not_transponse.csv"
 
 # Rango de tamaños de la matriz (exponencial desde 100)
 test_sizes=(200 400 800 1600 3200)
