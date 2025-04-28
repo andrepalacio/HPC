@@ -5,7 +5,7 @@
 
 // matrix multiplication paralelizada con OpenMP
 void matrixMultiplication(int* matrixA, int* matrixB, int* matrixC, int n){
-    #pragma omp parallel for
+    #pragma omp parallel for schedule(static)
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
             int sum = 0;
@@ -37,18 +37,28 @@ void fillMatrix(int* matrix, int n){
 
 int main(int argc, char* argv[]) {
     // Check if the number of arguments is correct
-    if (argc != 3) {
-        printf("Usage: %s <matrix_size> <verbose (0 or 1)>\n", argv[0]);
+    if (argc != 4) {
+        printf("Usage: %s <matrix_size> <num_threads> <verbose (0 or 1)>\n", argv[0]);
         return 1;
     }
 
     // Read the arguments from matrix size and verbose
-    int n = atoi(argv[1]);
-    int verbose = atoi(argv[2]);
+    int n = atoi(argv[1]);\
+    int num_threads = atoi(argv[2]);
+    int verbose = atoi(argv[3]);
+
 
     // Check if the arguments are valid
     if (n <= 0 || (verbose != 0 && verbose != 1)) {
         printf("Error: Invalid arguments. Matrix size must be > 0 and verbose must be 0 or 1.\n");
+        return 1;
+    }
+
+    // Set the number of threads
+    omp_set_num_threads(num_threads);
+    // Check if the number of threads is valid
+    if (num_threads <= 0) {
+        printf("Error: Invalid number of threads. Must be > 0.\n");
         return 1;
     }
 

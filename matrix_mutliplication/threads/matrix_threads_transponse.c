@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <time.h>
 #include <sys/time.h>  
-int *matrixA, *matrixB, *matrixC;
+int *matrixA, *matrixB, *matrixC, *matrixBT;
 int numThreads;
 
 typedef struct {
@@ -11,6 +11,14 @@ typedef struct {
     int n;
 } ThreadData;
 
+// Transpone la matriz B y la almacena en matrixBT
+void transposeMatrix(int* matrix, int* transposed, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            transposed[j * n + i] = matrix[i * n + j];
+        }
+    }
+}
 
 // Multiplicación de matrices usando threads
 void* matrixMultiplicationThread(void* arg) {
@@ -21,7 +29,7 @@ void* matrixMultiplicationThread(void* arg) {
         for (int j = 0; j < n; j++) {
             int sum = 0;
             for (int k = 0; k < n; k++) {
-              sum += matrixA[i * n + k] * matrixB[k * n + j];  
+                sum += matrixA[i * n + k] * matrixBT[j * n + k];  // Ahora accedemos secuencialmente
             }
             matrixC[i * n + j] = sum;
         }
@@ -74,11 +82,14 @@ int main(int argc, char* argv[]) {
     // Asignación de memoria
     matrixA = (int*)malloc(n * n * sizeof(int));
     matrixB = (int*)malloc(n * n * sizeof(int));
+    matrixBT = (int*)malloc(n * n * sizeof(int));  // Matriz transpuesta de B
     matrixC = (int*)calloc(n * n, sizeof(int));
 
     fillMatrix(matrixA, n);
     fillMatrix(matrixB, n);
 
+
+    transposeMatrix(matrixB, matrixBT, n);
 
     pthread_t threads[numThreads];
     ThreadData threadData[numThreads];
@@ -113,6 +124,7 @@ int main(int argc, char* argv[]) {
     // Liberar memoria
     free(matrixA);
     free(matrixB);
+    free(matrixBT);
     free(matrixC);
 
     return 0;
