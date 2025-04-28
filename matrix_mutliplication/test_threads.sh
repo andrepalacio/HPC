@@ -1,14 +1,14 @@
 #!/bin/bash
 
-EXECUTABLE="./matrix_mutliplication/threads/threads_test"
-RESULT_FILE="./matrix_mutliplication/threads/tests_matrix_threads3.csv"
-TEST_DIR="./threadsncial/tests_matrix_threads3"
+EXECUTABLE="./matrix_mutliplication/threads/matrix_threads_o"
+RESULT_FILE="./TEST/test_matrix_mutliplication/tests_matrix_threads.csv"
+TEST_DIR="./TEST/test_matrix_mutliplication/"
 
 # Crear directorios si no existen
-mkdir -p "$TEST_DIR/logarithmic" "$TEST_DIR/linear" "$TEST_DIR/avg"
+mkdir -p "$TEST_DIR"
 
 # Rango de tamaños de la matriz (exponencial desde 100)
-test_sizes=(100 200 400 800 1600 3200 6400)
+test_sizes=(100 200 400 800 1600 3200)
 num_repetitions=10
 num_threads=(2 4 8 16 32)
 
