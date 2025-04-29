@@ -5,7 +5,7 @@ RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_s
 
 
 # Rangos de la matriz
-test_sizes=(100000 500000 1000000 5000000 10000000)
+test_sizes=(10000 100000 500000 1000000 5000000 10000000)
 num_repetitions=10
 num_steps=(200 500 1000 2000 5000)
 

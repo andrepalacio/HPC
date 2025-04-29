@@ -4,7 +4,7 @@ EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/threads/jacobi_threads"
 RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_threads.csv"
 
 # Parámetros de prueba
-test_sizes=(100000 500000 1000000 5000000 10000000)
+test_sizes=(10000 100000 500000 1000000 5000000 10000000)
 num_repetitions=10
 num_steps=(200 500 1000 2000 5000)
 num_threads=(4 8 16)
