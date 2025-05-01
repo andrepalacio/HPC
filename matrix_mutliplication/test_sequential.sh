@@ -1,16 +1,14 @@
 #!/bin/bash
 
 # Configuración de rutas y archivos
-EXECUTABLE="./matrix_mutliplication/secuencial/matrix_secuencial_o3"
-RESULT_FILE="./TEST/test_matrix_mutliplication/tests_matrix_secuencial_o3.csv"
-TEST_DIR="./TEST/test_matrix_mutliplication/"
+EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/secuencial/matrix_secuencial_o3"
+RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/secuencial/tests_matrix_secuencial_o3_2.csv"
+
 
 # Parámetros de prueba
 num_repetitions=10
 test_sizes=(200 400 800 1600 3200)
 
-# Crear directorios si no existen
-mkdir -p "$TEST_DIR"
 
 # Crear archivo CSV y escribir encabezado si no existe
 echo "Iteration,Matrix Size,Execution Time (s)" > "$RESULT_FILE"
