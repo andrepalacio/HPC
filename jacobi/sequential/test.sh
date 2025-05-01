@@ -2,10 +2,7 @@
 
 EXECUTABLE="./jacobi1d"
 RESULT_FILE="./tests_jacobi1d.csv"
-TEST_DIR="./tests_jacobi1d"
 
-# Crear directorios si no existen
-mkdir -p "$TEST_DIR/logarithmic" "$TEST_DIR/linear" "$TEST_DIR/avg"
 
 # Rango de tamaños de la matriz (exponencial desde 100)
 test_sizes=(10000 100000 400000 1000000 6000000 10 00000)

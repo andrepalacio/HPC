@@ -8,9 +8,9 @@ TEST_DIR="./TEST/"
 mkdir -p "$TEST_DIR"
 
 # Rangos de la matriz
-test_sizes=(100000 500000 1000000 5000000 10000000)
+test_sizes=(10000 100000 500000 1000000 5000000 10000000)
 num_repetitions=10
-num_steps=(200 500 1000 2000)
+num_steps=(200 500 1000 2000 5000)
 
 # Crear archivo CSV y escribir encabezado si no existe
 echo "Iteration,Size,Num Steps,Execution Time (s)" > "$RESULT_FILE"

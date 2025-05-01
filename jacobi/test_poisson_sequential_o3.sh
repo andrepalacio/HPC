@@ -1,7 +1,8 @@
 #!/bin/bash
 
-EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/sequential/jacobi1d"
-RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_sequential.csv"
+EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/sequential/jacobi1d_o3"
+RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_sequential_o3.csv"
+
 
 
 # Rangos de la matriz

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/threads/jacobi_threads"
-RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_threads.csv"
+EXECUTABLE="./jacobi/threads/jacob_paralel_threads"
+RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_openmp.csv"
+
 
 # Parámetros de prueba
 test_sizes=(100000 500000 1000000 5000000 10000000)
