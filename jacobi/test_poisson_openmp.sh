@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EXECUTABLE="./jacobi/threads/jacob_paralel_threads"
+EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/openmp/jacobi_omp"
 RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_openmp.csv"
 
 
