@@ -1,7 +1,10 @@
 #!/bin/bash
 
-EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/threads/matrix_threads"
-RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/matrix_mutliplication/threads/tests_matrix_threads_not_transponse.csv"
+EXECUTABLE="/home/andrespalacio/Descargas/HPC/matrix_mutliplication/threads/matrix_threads"
+RESULT_FILE="/home/andrespalacio/Descargas/HPC/matrix_mutliplication/ANDY_TESTS/tests_matrix_threads_not_transponse.csv"
+DIRECTORY="/home/andrespalacio/Descargas/HPC/matrix_mutliplication/ANDY_TESTS"
+
+mkdir -p "$DIRECTORY"
 
 # Rango de tamaños de la matriz (exponencial desde 100)
 test_sizes=(200 400 800 1600 3200)
