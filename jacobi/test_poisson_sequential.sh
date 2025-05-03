@@ -1,11 +1,15 @@
 #!/bin/bash
 
-EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/sequential/jacobi1d"
-RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_sequential.csv"
+# Routes Santi
+# EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/sequential/jacobi1d"
+# RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_sequential.csv"
 
+# Routes Andres
+EXECUTABLE="/home/andrespalacio/Descargas/HPC/jacobi/sequential/jacobi1d"
+RESULT_FILE="/home/andrespalacio/Descargas/HPC/TEST/ANDY_TESTS/tests_poisson_sequential.csv"
 
 # Rangos de la matriz
-test_sizes=(10000 100000 500000 1000000 5000000 10000000)
+test_sizes=(100000 500000 1000000 5000000 10000000)
 num_repetitions=10
 num_steps=(200 500 1000 2000 5000)
 

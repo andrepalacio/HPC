@@ -1,7 +1,12 @@
 #!/bin/bash
 
-EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/openmp/jacobi_omp"
-RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_openmp.csv"
+# Routes Santi
+# EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/openmp/jacobi_omp"
+# RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_openmp.csv"
+
+# Routes Andres
+EXECUTABLE="/home/andrespalacio/Descargas/HPC/jacobi/openmp/jacobi_omp"
+RESULT_FILE="/home/andrespalacio/Descargas/HPC/TEST/test_poisson/tests_poisson_openmp.csv"
 
 
 # Parámetros de prueba

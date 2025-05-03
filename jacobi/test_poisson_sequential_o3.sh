@@ -1,8 +1,12 @@
 #!/bin/bash
 
-EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/sequential/jacobi1d_o3"
-RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_sequential_o3.csv"
+# Routes Santi
+# EXECUTABLE="/home/smejia115/Desktop/UTP/HPC/jacobi/sequential/jacobi1d_o3"
+# RESULT_FILE="/home/smejia115/Desktop/UTP/HPC/jacobi/tests_ryzen9/tests_poisson_sequential_o3.csv"
 
+# Routes Andres
+EXECUTABLE="/home/andrespalacio/Descargas/HPC/jacobi/sequential/jacobi1d_o3"
+RESULT_FILE="/home/andrespalacio/Descargas/HPC/TEST/ANDY_TESTS/tests_poisson_sequential_o3.csv"
 
 
 # Rangos de la matriz
